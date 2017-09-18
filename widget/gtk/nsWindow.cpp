@@ -764,6 +764,11 @@ nsWindow::Destroy()
     }
 
     GtkWidget *owningWidget = GetMozContainerWidget();
+    if(mTitlebar) {
+        gtk_widget_destroy(mTitlebar);
+        mTitlebar = nullptr;
+    }
+
     if (mShell) {
         gtk_widget_destroy(mShell);
         mShell = nullptr;
@@ -3748,6 +3753,13 @@ nsWindow::Create(nsIWidget* aParent,
             GtkWindowGroup *group = gtk_window_group_new();
             gtk_window_group_add_window(group, GTK_WINDOW(mShell));
             g_object_unref(group);
+
+            mTitlebar = gtk_header_bar_new();
+            gtk_header_bar_set_show_close_button(GTK_HEADER_BAR(mTitlebar), TRUE);
+            // gtk_style_context_add_class(gtk_widget_get_style_context (mTitlebar), "header");
+            // gtk_style_context_add_class(gtk_widget_get_style_context (mTitlebar), "header-bar");
+            // gtk_style_context_add_class(gtk_widget_get_style_context (mTitlebar), "titlebar");
+            gtk_window_set_titlebar(GTK_WINDOW (mShell), mTitlebar);
         }
 
         // Create a container to hold child windows and child GtkWidgets.
@@ -4208,6 +4220,7 @@ nsWindow::NativeShow(bool aAction)
                 SetUserTimeAndStartupIDForActivatedWindow(mShell);
             }
 
+            gtk_widget_show(mTitlebar);
             gtk_widget_show(mShell);
         }
         else if (mContainer) {
@@ -4243,6 +4256,7 @@ nsWindow::NativeShow(bool aAction)
                 mPendingConfigures = 0;
             }
 
+            gtk_widget_hide(mTitlebar);
             gtk_widget_hide(mShell);
 
             ClearTransparencyBitmap(); // Release some resources

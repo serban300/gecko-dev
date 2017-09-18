@@ -436,6 +436,7 @@ private:
 
 
     GtkWidget          *mShell;
+    GtkWidget          *mTitlebar;
     MozContainer       *mContainer;
     GdkWindow          *mGdkWindow;
     PlatformCompositorWidgetDelegate* mCompositorWidgetDelegate;

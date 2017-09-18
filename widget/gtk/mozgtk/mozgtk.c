@@ -601,6 +601,11 @@ STUB(gtk_color_chooser_get_type)
 STUB(gtk_color_chooser_set_rgba)
 STUB(gtk_color_chooser_get_rgba)
 STUB(gtk_color_chooser_set_use_alpha)
+
+STUB(gtk_header_bar_new)
+STUB(gtk_window_set_titlebar)
+STUB(gtk_header_bar_get_type)
+STUB(gtk_header_bar_set_show_close_button)
 #endif
 
 #ifdef GTK2_SYMBOLS
